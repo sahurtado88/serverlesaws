@@ -16,12 +16,6 @@ resource "aws_dynamodb_table" "basic-dynamodb-table" {
     type = "N"
   }
 
-
-  ttl {
-    attribute_name = "TimeToExist"
-    enabled        = true
-  }
-
   tags = {
     Name        = "dynamodb-table-1"
     Environment = "production"
@@ -47,18 +41,13 @@ resource "aws_dynamodb_table" "table2" {
   }
 
 
-  ttl {
-    attribute_name = "TimeToExist"
-    enabled        = true
-  }
-
   global_secondary_index {
-    name               = "Username-ConversationId-index"
-    hash_key           = "Username"
-    range_key          = "ConversationId"
-    write_capacity     = 1
-    read_capacity      = 1
-    projection_type    = "ALL"
+    name            = "Username-ConversationId-index"
+    hash_key        = "Username"
+    range_key       = "ConversationId"
+    write_capacity  = 1
+    read_capacity   = 1
+    projection_type = "ALL"
   }
 
   tags = {

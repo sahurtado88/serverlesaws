@@ -101,7 +101,21 @@ resource "aws_iam_policy" "iam_policy_for_lambda" {
      ],
      "Resource": "arn:aws:s3:::${aws_s3_bucket.bucket.id}/*",
      "Effect": "Allow"
-   }
+   },
+    {
+      "Sid": "VisualEditor0",
+      "Effect": "Allow",
+      "Action": [
+        "dynamodb:BatchWriteItem",
+        "dynamodb:PutItem",
+        "dynamodb:Query"
+      ],
+      "Resource": [
+        "arn:aws:dynamodb:${var.region}:183631329372:table/Chat-Conversations",
+        "arn:aws:dynamodb:${var.region}:183631329372:table/Chat-Messages",
+        "arn:aws:dynamodb:${var.region}:183631329372:table/Chat-Conversations/index/Username-ConversationId-index"
+      ]
+    }
  ]
 }
 EOF
@@ -109,7 +123,7 @@ EOF
 
 resource "aws_iam_role_policy_attachment" "lambda_basic" {
   policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
-  role = aws_iam_role.lambda_role.name
+  role       = aws_iam_role.lambda_role.name
 }
 
 ## attach policy to role
